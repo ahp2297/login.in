@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="login styl.CSS">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="login-box">
+        <div class="row">
+            <div class="col-md-6 login-left">
+                <h2>login here</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="user" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">login</button>             
+                </form>
+            </div>
+
+            <div class="col-md-6 login-right">
+                <h2>Register here</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name="user" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">register</button>             
+                </form>
+            </div>
+        </div>
+        </div>
+    </div>
+</body>
+</html>
+<?php
+
+session_start();
+$con = mysqli_connect('localhost','root');
+mysqli_select_db($con ,'userregistration');
+
+$name = $_POST['user'];
+$pass = $_POST['password'];
+
+$s = "select * from usertable where name = '$name'";
+$result = mysqli_query($con,$s); 
+$num = mysqli_num_rows($result);     
+
+if($num == 1){
+    echo "Username Aleready Taken";
+}
+else{
+    $reg = "insert into usertable(name , password) values ('$name','$pass')";
+    mysqli_query($con,$reg);
+    echo "Registration Succesfull";
+}
+?>
